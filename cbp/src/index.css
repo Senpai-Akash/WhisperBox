@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@layer utilities {
+  @keyframes typeLoop {
+    0% { max-width: 0px; }
+    40% { max-width: 400px; }  /* enough to show WHISPER fully */
+    60% { max-width: 400px; }
+    100% { max-width: 0px; }
+  }
+
+  @keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #a855f7; }
+  }
+}
+
