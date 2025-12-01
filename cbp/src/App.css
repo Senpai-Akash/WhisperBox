@@ -2,30 +2,60 @@
 
 /* small, one-time per-letter entrance animation for WHISPER */
 .whisper-letter {
-	opacity: 0;
-	transform: translateY(12px) scale(0.98);
+  opacity: 0;
+  transform: translateY(20px) scale(0.95); /* start lower for more float */
 }
 
 .whisper--play .whisper-letter {
-	/* animation delays are controlled via CSS var --i from inline style */
-	animation-name: whisperPop;
-	/* total per-letter cycle: 600ms for motion + ~800ms pause = 1400ms */
-	animation-duration: 4000ms;
-	animation-iteration-count: infinite; /* loop forever */
-	animation-fill-mode: both;
-	animation-timing-function: cubic-bezier(.2,.9,.3,1);
-	animation-delay: calc(var(--i) * 80ms);
+  /* animation delays are controlled via CSS var --i from inline style */
+  animation-name: whisperPop;
+  /* faster cycle and longer float range */
+  animation-duration: 2000ms; /* faster than before */
+  animation-iteration-count: infinite; /* loop forever */
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.3,.8,.4,1); /* slightly smoother curve */
+  animation-delay: calc(var(--i) * 60ms); /* shorter delay for faster per-letter entry */
 }
 
 @keyframes whisperPop {
-	/* active motion happens early in the cycle, then we hold to create a visible pause */
-	0% { opacity: 0; transform: translateY(16px) scale(0.98); }
-	35% { opacity: 1; transform: translateY(-6px) scale(1.06); }
-	60% { opacity: 1; transform: translateY(0) scale(1); }
-	100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9); /* start farther down */
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1.08); /* float up higher */
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(10px) scale(1.02); /* gentle bounce */
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.04); /* float again */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1); /* settle back */
+  }
 }
 
 /* Respect user preference on reduced motion */
 @media (prefers-reduced-motion: reduce) {
-	.whisper--play .whisper-letter { animation: none; opacity: 1; transform: none; }
+  .whisper--play .whisper-letter { 
+    animation: none; 
+    opacity: 1; 
+    transform: none; 
+  }
+}
+@keyframes floating {
+  0%   { transform: translateY(0) rotateZ(0deg); }
+  25%  { transform: translateY(-15px) rotateZ(-1deg); }
+  50%  { transform: translateY(0) rotateZ(1deg); }
+  75%  { transform: translateY(-10px) rotateZ(-1deg); }
+  100% { transform: translateY(0) rotateZ(0deg); }
+}
+
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
 }
